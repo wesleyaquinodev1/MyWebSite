@@ -2,5 +2,5 @@ name = "mywebsite"
 compatibility_date = "2026-11-09"
 
 [assets]
-directory = "./dist/my-web-site/"
+directory = "./dist/my-web-site/browser/"
 not_found_handling = "single-page-application"
