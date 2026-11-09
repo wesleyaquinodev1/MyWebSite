@@ -1,0 +1,5 @@
+name = "mywebsite"
+compatibility_date = "2026-11-09"
+
+[assets]
+directory = "./my-web-site/src/"
