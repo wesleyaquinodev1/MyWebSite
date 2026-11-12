@@ -1,0 +1,128 @@
+#select-language{
+    border: none;
+}
+
+select:focus {
+    outline: none;
+    border-color: #007bff;
+}
+span{
+    display: block;
+}
+
+button {
+    padding: 0.5rem;
+    cursor: pointer;
+    border-radius: 25rem;
+}
+
+button:hover {
+    background: #2a564a;
+    color: #ffffff;
+}
+
+button:focus-visible {
+    outline: 3px solid #11231e;
+    outline-offset: 3px;
+}
+
+textarea {
+    resize: none;
+}  
+
+a {
+    text-decoration: none;
+    color: #000000;
+    font-weight: bold;
+}
+
+.texto-formatado {
+    white-space: pre-line;
+}
+
+.linha-vertical {
+    width: 2px;
+    height: 218px;
+    background-color: #d4d4d6;
+    margin: 0.1rem;
+}
+
+.theme-switch {
+    position: relative;
+    display: inline-block;
+    width: 54px;
+    height: 28px;
+    cursor: pointer;
+}
+
+.theme-switch input {
+    display: none;
+}
+
+.slider {
+    position: absolute;
+    inset: 0;
+    background: #e2e8f0;
+    border-radius: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 7px;
+    font-size: 13px;
+    transition: background 0.3s;
+}
+
+.slider .fa-sun {
+    color: #f59e0b;
+}
+
+.slider .fa-moon {
+    color: #64748b;
+}
+
+.slider::before {
+    content: "";
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    left: 3px;
+    background: #ffffff;
+    border-radius: 50%;
+    transition: transform 0.3s;
+    z-index: 1;
+}
+
+input:checked+.slider {
+    background: #0fa382;
+}
+
+input:checked+.slider::before {
+    transform: translateX(26px);
+}
+
+@mixin hover-underline($color: #143d2b, $height: 2.5px, $offset: -5px) {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+
+  &::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: $offset;
+    width: 100%;
+    height: $height;
+    background-color: $color;
+    border-radius: 2px;
+    
+    transform: scaleX(0);
+    transform-origin: left center;
+    transition: transform 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+  }
+
+  &:hover::after,
+  &:focus-visible::after {
+    transform: scaleX(1);
+  }
+}
