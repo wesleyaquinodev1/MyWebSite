@@ -1,48 +1,28 @@
 import { Component, OnInit, signal } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
 import { Title, Meta } from '@angular/platform-browser';
 import packageJson from '../../package.json';
-import { NgxTurnstileModule } from 'ngx-turnstile';
-import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,FormsModule, NgxTurnstileModule],
+  imports: [CommonModule],
   templateUrl: './app.html',
   styleUrl: './app.scss'
 })
 export class App implements OnInit {
   constructor(
     private titleService: Title,
-    private metaService: Meta
+    private metaService: Meta,
   ) {}
 
   protected readonly title = signal('Wesley Aquino | Desenvolvedor Full Stack');
   deployHash = '__BUILD_HASH__';
   appVersion = packageJson.version;
   copyrightYear = '2026'
-  isVerified = false;
-
-  onTurnstileResolved(token: string | null) {
-    if (token) {
-      this.isVerified = true;
-      console.log('Turnstile resolvido com sucesso, token gerado.');
-    } else {
-      this.isVerified = false;
-    }
-  }
-
-  onSubmit(event: Event) {
-    if (!this.isVerified) {
-      event.preventDefault();
-      alert('Por favor, confirme que você não é um robô.');
-      return;
-    }
-  }
 
   ngOnInit(): void {
     this.titleService.setTitle(
-      'Wesley Aquino | Desenvolvedor Full Stack'
+      'Portfólio Wesley Aquino | Desenvolvedor Full Stack'
     );
 
     this.metaService.addTags([

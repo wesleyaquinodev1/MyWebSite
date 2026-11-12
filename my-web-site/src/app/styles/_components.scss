@@ -7,14 +7,14 @@ select:focus {
     border-color: #007bff;
 }
 
-span {
-    display: block;
-}
-
 .icon {
     display: inline-block;
     width: 1em;
     height: 1em;
+
+    font-size: inherit;
+    line-height: 1;
+    vertical-align: -0.125em;
 
     background-color: currentColor;
 
@@ -26,7 +26,23 @@ span {
     -webkit-mask-position: center;
     -webkit-mask-size: contain;
 
-    flex-shrink: 0;
+    flex: 0 0 auto;
+}
+
+.icon-sm {
+    font-size: 0.875em;
+}
+
+.icon-md {
+    font-size: 1em;
+}
+
+.icon-lg {
+    font-size: 1.25em;
+}
+
+.icon-xl {
+    font-size: 1.5em;
 }
 
 .icon-arrow-right-download{
@@ -62,6 +78,11 @@ span {
 .icon-arrow-right{
     mask-image: url('../assets/icons/fontawesome/solid/arrow-right-solid-full.svg');
     -webkit-mask-image: url('../assets/icons/fontawesome/solid/arrow-right-solid-full.svg');
+}
+
+.icon-bars-menu-hamburger{
+    mask-image: url('../assets/icons/fontawesome/solid/bars-solid-full.svg');
+    -webkit-mask-image: url('../assets/icons/fontawesome/solid/bars-solid-full.svg');
 }
 
 .icon-cloud{

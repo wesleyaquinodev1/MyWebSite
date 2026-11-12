@@ -94,18 +94,15 @@ nav {
             flex-wrap: wrap;
         }
 
-        /* Botão hambúrguer */
         .hamburger {
             display: block;
             font-size: 1.35rem;
             color: #111827;
             cursor: pointer;
             order: 3;
-            /* Fica à direita das ferramentas */
             margin-left: 1rem;
         }
 
-        /* Mantém PT e Toggle visíveis no topo no mobile */
         .nav-bar-tools {
             margin-left: auto;
             border-left: none;
@@ -113,7 +110,6 @@ nav {
             order: 2;
         }
 
-        /* Menu dropdown fechado por padrão */
         .nav-links {
             display: none;
             flex-direction: column;
@@ -126,14 +122,11 @@ nav {
             order: 4;
         }
 
-        /* Abre o menu ao clicar no hambúrguer */
         .menu-toggle:checked~.nav-links {
             display: flex;
         }
     }
 }
-
-//hero e sobre mim
 
 /* Reutilizável para o detalhe "— Olá, eu sou" e "— Sobre mim" */
 .eyebrow {
@@ -154,7 +147,6 @@ nav {
     }
 }
 
-/* ================= HERO SECTION ================= */
 .hero {
     background-color: #f6f8f7;
     padding: 4rem 1.5rem 0;
