@@ -3,6 +3,7 @@ import packageJson from '../../package.json';
 import { CommonModule } from '@angular/common';
 import { translations, type Language } from './core/i18n/translations';
 import { SeoService } from './core/seo/seo.service';
+import { BUILD_INFO } from './core/build-info';
 
 @Component({
   selector: 'app-root',
@@ -19,7 +20,7 @@ export class App implements OnInit {
   ) {}
 
   protected readonly title = signal('Wesley Aquino | Desenvolvedor Full Stack');
-  deployHash = '__BUILD_HASH__';
+  readonly deployHash = BUILD_INFO.commitHash;
   appVersion = packageJson.version;
   copyrightYear = '2026'
   readonly language = signal<Language>('pt'); 
