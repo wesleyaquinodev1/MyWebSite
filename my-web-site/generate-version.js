@@ -1,5 +1,8 @@
 const fs = require('fs');
-const { execSync } = require('child_process');
+const path = require('path');
+const { execFileSync } = require('child_process');
+
+const projectRoot = __dirname;
 
 let commitHash =
     process.env.CF_PAGES_COMMIT_SHA ||
@@ -8,17 +11,29 @@ let commitHash =
 
 if (!commitHash) {
     try {
-        commitHash = execSync('git rev-parse HEAD').toString().trim();
-    } catch (e) {
-        commitHash = 'local-dev';
+        commitHash = execFileSync('git', ['rev-parse', 'HEAD'], {
+            cwd: projectRoot,
+            encoding: 'utf8'
+        }).trim();
+    } catch {
+        commitHash = '';
     }
 }
 
-const shortHash = commitHash.substring(0, 7);
-const appFile = './src/app/app.ts';
+const shortHash = /^[a-f0-9]{7,40}$/i.test(commitHash)
+    ? commitHash.substring(0, 7)
+    : 'local-dev';
 
-let content = fs.readFileSync(appFile, 'utf8');
-content = content.replace(/__BUILD_HASH__/g, shortHash);
-fs.writeFileSync(appFile, content);
+const outputDirectory = path.join(projectRoot, 'src/app/core');
+const outputFile = path.join(outputDirectory, 'build-info.ts');
 
-console.log(`Hash ${shortHash} injetado no app.ts`);
+const content = `// Arquivo gerado automaticamente por generate-version.js.
+export const BUILD_INFO = {
+    commitHash: '${shortHash}',
+} as const;
+`;
+
+fs.mkdirSync(outputDirectory, { recursive: true });
+fs.writeFileSync(outputFile, content, 'utf8');
+
+console.log(`Hash ${shortHash} injetado em build-info.ts`);
