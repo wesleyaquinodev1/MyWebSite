@@ -8,23 +8,31 @@
     </label>
 
     <ul class="nav-links">
-      <li><a href="#hero">Início</a></li>
-      <li><a href="#sobre-mim">Sobre</a></li>
-      <li><a href="#experiencia">Experiência</a></li>
-      <li><a href="#projetos">Projetos</a></li>
-      <li><a href="#habilidades">Habilidades</a></li>
-      <li><a href="#formacao">Formação</a></li>
-      <li><a href="#contatos">Contatos</a></li>
+      <li><a href="#hero">{{ t.nav.home }}</a></li>
+      <li><a href="#sobre-mim">{{ t.nav.about }}</a></li>
+      <li><a href="#experiencia">{{ t.nav.experience }}</a></li>
+      <li><a href="#projetos">{{ t.nav.projects }}</a></li>
+      <li><a href="#habilidades">{{ t.nav.skills }}</a></li>
+      <li><a href="#formacao">{{ t.nav.education }}</a></li>
+      <li><a href="#contatos">{{ t.nav.contact }}</a></li>
     </ul>
 
     <div class="nav-bar-tools">
-      <select name="language" id="select-language" aria-label="Selecionar idioma">
+      <select
+        name="language"
+        id="select-language"
+        [attr.aria-label]="t.nav.language"
+        [value]="language()"
+        (change)="changeLanguage($event)">
         <option value="pt">PT</option>
         <option value="en">EN</option>
       </select>
 
-      <label class="theme-switch" aria-label="Alternar tema">
-        <input type="checkbox">
+      <label class="theme-switch" [attr.aria-label]="t.nav.theme">
+        <input
+          type="checkbox"
+          [checked]="darkMode()"
+          (change)="changeTheme($event)">
         <span class="slider">
           <i class="fa-regular fa-sun"></i>
           <i class="fa-solid fa-moon"></i>
@@ -34,43 +42,39 @@
   </nav>
 </div>
 
-
 <header class="main-header">
-  <section class="hero">
+  <section class="hero" id="hero">
     <div class="hero-container">
-
       <div class="hero-content">
-        <span class="eyebrow">Olá, eu sou</span>
+        <span class="eyebrow">{{ t.hero.greeting }}</span>
         <h1 class="hero-title">Wesley Aquino</h1>
-        <p class="hero-subtitle"><span>Desenvolvedor</span> Full Stack</p>
+        <p class="hero-subtitle"><span>{{ t.hero.role }}</span> {{ t.hero.roleComplement }}</p>
 
         <p class="hero-description">
-          Desenvolvedor de software com formação em Ciência da Computação e foco na criação de aplicações web, sistemas
-          e soluções digitais.
+          {{ t.hero.description }}
         </p>
 
         <div class="hero-actions">
           <a href="#projetos" class="button-primary">
             <i class="fa-solid fa-arrow-right"></i>
-            <span>Ver Projetos</span>
+            <span>{{ t.hero.projects }}</span>
           </a>
 
           <a href="#contatos" class="button-secondary">
             <i class="fa-regular fa-envelope"></i>
-            <span>Entrar em Contato</span>
+            <span>{{ t.hero.contact }}</span>
           </a>
 
-          <details class="resume-dropdown">
+          <details class="resume-dropdown" (document:click)="closeResumeDropdown($event)">
             <summary class="button-resume">
               <i class="fa-solid fa-download"></i>
-              <span>Baixar currículo</span>
+              <span>{{ t.hero.resume }}</span>
               <i class="fa-solid fa-chevron-down chevron"></i>
             </summary>
 
             <div class="resume-menu">
               <span class="menu-label">EM PORTUGUÊS</span>
               <a href="/curriculos/Wesley_Aquino_Dias_Curriculo_PT-BR.pdf" download>PDF <span>97 kB</span></a>
-
               <span class="menu-label">IN ENGLISH</span>
               <a href="/curriculos/Wesley_Aquino_Dias_Resume_EN.pdf" download>PDF <span>95 kB</span></a>
             </div>
@@ -78,11 +82,10 @@
         </div>
 
         <div class="hero-socials">
-          <a href="https://github.com/wesleyaquinodev1" target="_blank" rel="noopener noreferrer" aria-label="GitHub de Wesley Aquino">
+          <a href="https://github.com/wesleyaquinodev1" target="_blank" rel="noopener noreferrer" [attr.aria-label]="t.hero.github">
             <i class="fa-brands fa-github"></i>
           </a>
-          <a href="https://www.linkedin.com/in/wesleyaquino/" target="_blank" rel="noopener noreferrer"
-            aria-label="Perfil de Wesley Aquino no LinkedIn">
+          <a href="https://www.linkedin.com/in/wesleyaquino/" target="_blank" rel="noopener noreferrer" [attr.aria-label]="t.hero.linkedin">
             <i class="fa-brands fa-linkedin"></i>
           </a>
           <span class="social-divider"></span>
@@ -92,35 +95,30 @@
       <div class="hero-visual">
         <div class="photo-frame-wrapper">
           <div class="frame-backdrop"></div>
-
           <div class="photo-card">
-            <img src="eu_foto_profisional.webp" alt="Wesley Aquino, Desenvolvedor Full Stack" fetchpriority="high" class="hero-photo">
+            <img
+              src="eu_foto_profisional.webp"
+              draggable="false"
+              [alt]="t.hero.photoAlt"
+              fetchpriority="high"
+              class="hero-photo">
           </div>
-
           <div class="floating-badge">
             <span class="status-dot"></span>
-            <span>Full Stack • .NET & Angular</span>
+            <span>Full Stack • .NET &amp; Angular</span>
           </div>
         </div>
       </div>
-
     </div>
   </section>
 
   <section id="sobre-mim" class="about-section">
     <div class="about-container">
-
       <div class="about-text">
-        <span class="eyebrow">Sobre mim</span>
-        <h2 class="about-title">Uma jornada movida por tecnologia</h2>
-
-        <p class="texto-formatado">
-          Sou formado em <strong>Ciência da Computação</strong> e atuo como desenvolvedor <strong>Full Stack</strong>,
-          com experiência em criar soluções web eficientes, seguras e escaláveis.
-        </p>
-        <p>
-          Acredito no poder da tecnologia para resolver problemas reais e melhorar a vida das pessoas.
-        </p>
+        <span class="eyebrow">{{ t.about.eyebrow }}</span>
+        <h2 class="about-title">{{ t.about.title }}</h2>
+        <p class="texto-formatado">{{ t.about.paragraph1 }}</p>
+        <p>{{ t.about.paragraph2 }}</p>
       </div>
 
       <div class="about-pillars">
@@ -128,97 +126,62 @@
           <div class="pillar-icon">
             <i class="fa-solid fa-code"></i>
           </div>
-          <h3>Desenvolvimento Full Stack</h3>
-          <p>Do front ao back, com foco em qualidade.</p>
+          <h3>{{ t.about.pillars[0].title }}</h3>
+          <p>{{ t.about.pillars[0].description }}</p>
         </div>
 
         <div class="pillar-item">
           <div class="pillar-icon">
             <i class="fa-regular fa-lightbulb"></i>
           </div>
-          <h3>Soluções Reais</h3>
-          <p>Transformando necessidades em produtos digitais.</p>
+          <h3>{{ t.about.pillars[1].title }}</h3>
+          <p>{{ t.about.pillars[1].description }}</p>
         </div>
 
         <div class="pillar-item">
           <div class="pillar-icon">
             <i class="fa-solid fa-shield-halved"></i>
           </div>
-          <h3>Boas Práticas</h3>
-          <p>Código limpo, seguro e escalável.</p>
+          <h3>{{ t.about.pillars[2].title }}</h3>
+          <p>{{ t.about.pillars[2].description }}</p>
         </div>
       </div>
-
     </div>
   </section>
 </header>
 
 <section id="experiencia">
-  <h2>Experiência</h2>
+  <h2>{{ t.experience.title }}</h2>
 
-  <div class="group-experiencia">
-    <p>G4F</p>
-    <span>Cargo: Desenvolvedor full stack</span>
-    <span>mai. de 2024 - Atual · 2 anos 7 meses</span>
-    <span>Brasília, Distrito Federal, Brasil · Híbrido</span>
-  </div>
-
-  <div class="group-experiencia">
-    <p>Apae Brasil</p>
-    <span>Cargo: Assistente de TI</span>
-    <span>mar. de 2024 - abr. de 2024 · 2 meses</span>
-    <span>Brasília, Distrito Federal, Brasil · No local</span>
-  </div>
-
-  <div class="group-experiencia">
-    <p>CFC - Conselho Federal de Contabilidade (CFC)</p>
-    <span>Cargo Programador de software · Estágio</span>
-    <span>jun. de 2022 - mar. de 2024 · 1 ano 10 meses</span>
-    <span>Brasília, Distrito Federal, Brasil · No local</span>
-  </div>
-
-  <div class="group-experiencia">
-    <p>Freelance</p>
-    <span>Desenvolvedor web freelancer</span>
-    <span>jan. de 2023 - dez. de 2023 · 1 ano</span>
-  </div>
-
-  <div class="group-experiencia">
-    <p>CTFinancy Software Jurídico</p>
-    <span>Cargo: Suporte técnico · Estágio</span>
-    <span>dez. de 2020 - dez. de 2021 · 1 ano 1 mês</span>
-    <span>Brasília, Distrito Federal, Brasil · No local</span>
+  <div class="group-experiencia" *ngFor="let job of t.experience.jobs">
+    <p>{{ job.company }}</p>
+    <span>{{ job.role }}</span>
+    <span>{{ job.period }}</span>
+    <span *ngIf="job.location">{{ job.location }}</span>
   </div>
 </section>
 
-
 <section id="projetos" class="projects-section">
   <div class="projects-container">
-
     <div class="projects-header">
-      <span class="projects-eyebrow">Projetos</span>
-      <h2 class="projects-title">Projetos que <br> mostram na prática</h2>
-      <p class="projects-description">
-        Soluções reais desenvolvidas do protótipo ao deploy, com foco em performance, responsividade e experiência do
-        usuário.
-      </p>
+      <span class="projects-eyebrow">{{ t.projects.eyebrow }}</span>
+      <h2 class="projects-title">{{ t.projects.titleStart }} <br> {{ t.projects.titleEnd }}</h2>
+      <p class="projects-description">{{ t.projects.description }}</p>
     </div>
 
     <div class="projects-grid">
-
       <article class="project-card">
         <a href="https://aamsconsultoria.com.br/" target="_blank" rel="noopener noreferrer" class="card-image-wrapper">
-          <img src="/projeto-aamsconsultoria.webp" alt="Interface do site AAMS Assessoria e Consultoria"
+          <img
+            src="/projeto-aamsconsultoria.webp"
+            [alt]="language() === 'pt' ? 'Interface do site AAMS Assessoria e Consultoria' : 'AAMS Assessoria e Consultoria website interface'"
             class="project-image">
-          <span class="project-badge">Landing Page</span>
+          <span class="project-badge">{{ t.projects.badge }}</span>
         </a>
 
         <div class="card-body">
-          <h3 class="project-title">AAMS Assessoria e Consultoria</h3>
-
-          <p class="project-description">
-            Landing page institucional com prototipação no Figma, responsividade e otimização para SEO.
-          </p>
+          <h3 class="project-title">{{ t.projects.projectTitle }}</h3>
+          <p class="project-description">{{ t.projects.projectDescription }}</p>
           <div class="project-tags">
             <span>HTML</span>
             <span>CSS</span>
@@ -229,26 +192,22 @@
 
           <div class="card-footer">
             <a href="https://aamsconsultoria.com.br/" target="_blank" rel="noopener noreferrer" class="project-link">
-              <span>Acessar</span>
+              <span>{{ t.projects.access }}</span>
               <i class="fa-solid fa-arrow-up-right-from-square"></i>
             </a>
           </div>
         </div>
       </article>
-
     </div>
   </div>
 </section>
 
 <section id="habilidades" class="skills-section">
   <div class="skills-container">
-
     <div class="skills-header">
-      <span class="skills-eyebrow">Stack Tecnológica</span>
-      <h2 class="skills-title">Minhas Habilidades</h2>
-      <p class="skills-description">
-        Tecnologias e ferramentas que utilizo no dia a dia para construir aplicações completas, escaláveis e seguras.
-      </p>
+      <span class="skills-eyebrow">{{ t.skills.eyebrow }}</span>
+      <h2 class="skills-title">{{ t.skills.title }}</h2>
+      <p class="skills-description">{{ t.skills.description }}</p>
     </div>
 
     <div class="skills-grid">
@@ -257,7 +216,7 @@
           <div class="icon-box">
             <i class="fa-solid fa-code"></i>
           </div>
-          <h3>Front-end</h3>
+          <h3>{{ t.skills.frontend }}</h3>
         </div>
         <div class="tech-tags">
           <span class="tag">HTML5</span>
@@ -274,7 +233,7 @@
           <div class="icon-box">
             <i class="fa-solid fa-server"></i>
           </div>
-          <h3>Back-end</h3>
+          <h3>{{ t.skills.backend }}</h3>
         </div>
         <div class="tech-tags">
           <span class="tag highlight">C#</span>
@@ -291,7 +250,7 @@
           <div class="icon-box">
             <i class="fa-solid fa-database"></i>
           </div>
-          <h3>Banco de Dados</h3>
+          <h3>{{ t.skills.database }}</h3>
         </div>
         <div class="tech-tags">
           <span class="tag">SQL Server</span>
@@ -305,7 +264,7 @@
           <div class="icon-box">
             <i class="fa-solid fa-cloud"></i>
           </div>
-          <h3>Infraestrutura</h3>
+          <h3>{{ t.skills.infrastructure }}</h3>
         </div>
         <div class="tech-tags">
           <span class="tag">Linux</span>
@@ -321,7 +280,7 @@
           <div class="icon-box">
             <i class="fa-solid fa-terminal"></i>
           </div>
-          <h3>Ferramentas & Produtividade</h3>
+          <h3>{{ t.skills.tools }}</h3>
         </div>
         <div class="tech-tags">
           <span class="tag">Git</span>
@@ -332,47 +291,43 @@
           <span class="tag"><i class="fa-solid fa-wand-magic-sparkles"></i> Claude Code CLI</span>
         </div>
       </article>
-
     </div>
   </div>
 </section>
 
 <section id="formacao">
   <div class="section-header">
-    <h2>Formação</h2>
-    <p>Minha trajetória acadêmica</p>
+    <h2 class="eyebrow">{{ t.education.title }}</h2>
+    <p>{{ t.education.subtitle }}</p>
   </div>
 
   <div class="formacao-grid">
     <article class="formacao-item active">
       <div class="formacao-top">
-        <span class="badge">Em andamento</span>
-        <span class="periodo">abr. de 2024 – dez. de 2026</span>
+        <span class="badge">{{ t.education.current }}</span>
+        <span class="periodo">{{ t.education.currentPeriod }}</span>
       </div>
-      <h3>Pós-graduação Lato Sensu em Segurança Cibernética</h3>
-      <p class="instituicao">UniCEUB - Centro Universitário de Brasília</p>
+      <h3>{{ t.education.currentDegree }}</h3>
+      <p class="instituicao">{{ t.education.currentInstitution }}</p>
     </article>
 
     <article class="formacao-item">
       <div class="formacao-top">
-        <span class="badge">Concluído</span>
+        <span class="badge">{{ t.education.completed }}</span>
         <span class="periodo">2019 – 2023</span>
       </div>
-      <h3>Bacharelado em Ciência da Computação</h3>
-      <p class="instituicao">Universidade Paulista (UNIP)</p>
+      <h3>{{ t.education.completedDegree }}</h3>
+      <p class="instituicao">{{ t.education.completedInstitution }}</p>
     </article>
   </div>
 </section>
 
 <section id="contatos" class="contact-section">
   <div class="contact-container">
-
     <div class="contact-info">
-      <span class="contact-eyebrow">Contato</span>
-      <h2 class="contact-title">Vamos conversar?</h2>
-      <p class="contact-description">
-        Estou aberto a novas oportunidades, projetos e conexões na área de tecnologia.
-      </p>
+      <span class="contact-eyebrow">{{ t.contact.eyebrow }}</span>
+      <h2 class="contact-title">{{ t.contact.title }}</h2>
+      <p class="contact-description">{{ t.contact.description }}</p>
 
       <div class="contact-links">
         <a href="mailto:wesleyaquinobsb@gmail.com" class="contact-link">
@@ -380,13 +335,12 @@
           <span>wesleyaquinobsb@gmail.com</span>
         </a>
 
-        <a href="https://www.linkedin.com/in/wesleyaquino/" target="_blank" rel="noopener noreferrer"
-          class="contact-link" aria-label="Perfil de Wesley Aquino no LinkedIn">
+        <a href="https://www.linkedin.com/in/wesleyaquino/" target="_blank" rel="noopener noreferrer" class="contact-link" [attr.aria-label]="t.hero.linkedin">
           <i class="fa-brands fa-linkedin"></i>
           <span>/wesleyaquino</span>
         </a>
 
-        <a href="https://github.com/wesleyaquinodev1" target="_blank" rel="noopener noreferrer" class="contact-link" aria-label="GitHub de Wesley Aquino">
+        <a href="https://github.com/wesleyaquinodev1" target="_blank" rel="noopener noreferrer" class="contact-link" [attr.aria-label]="t.hero.github">
           <i class="fa-brands fa-github"></i>
           <span>/wesleyaquinodev1</span>
         </a>
@@ -395,25 +349,24 @@
 
     <div class="contact-form-wrapper">
       <form class="contact-form" action="https://formsubmit.co/wesleyaquinobsb@gmail.com" method="POST">
-
-        <input type="hidden" name="_subject" value="Novo contato via Portfólio!">
+        <input type="hidden" name="_subject" [value]="t.contact.form.emailSubject">
 
         <div class="input-group">
-          <input type="text" placeholder="Nome completo"  name="nome" required>
-          <input type="email" placeholder="Seu e-mail" name="email" required>
+          <input type="text" [placeholder]="t.contact.form.name" name="nome" required>
+          <input type="email" [placeholder]="t.contact.form.email" name="email" required>
         </div>
 
         <select name="assunto" required>
-          <option value="" disabled selected>Assunto</option>
-          <option value="oportunidade">Oportunidade de Trabalho</option>
-          <option value="projeto">Novo Projeto / Freelance</option>
-          <option value="conexao">Networking / Conexão</option>
-          <option value="outro">Outro assunto</option>
+          <option value="" disabled selected>{{ t.contact.form.subject }}</option>
+          <option value="oportunidade">{{ t.contact.form.work }}</option>
+          <option value="projeto">{{ t.contact.form.project }}</option>
+          <option value="conexao">{{ t.contact.form.networking }}</option>
+          <option value="outro">{{ t.contact.form.other }}</option>
         </select>
 
-        <textarea rows="4" placeholder="Mensagem" name="mensagem" rows="5" required></textarea>
+        <textarea rows="5" [placeholder]="t.contact.form.message" name="mensagem" required></textarea>
         <button type="submit" class="button-primary">
-          <span>Enviar mensagem</span>
+          <span>{{ t.contact.form.submit }}</span>
           <i class="fa-solid fa-arrow-right"></i>
         </button>
       </form>
@@ -424,7 +377,6 @@
 <footer class="main-footer">
   <div class="footer-container">
     <div class="footer-grid">
-
       <div class="footer-brand">
         <a href="#" class="brand-logo">
           <div class="logo-mark">
@@ -436,25 +388,22 @@
           </div>
         </a>
 
-        <p class="brand-description">
-          Desenvolvedor Full Stack formado em Ciência da Computação. Criando aplicações web modernas, seguras e
-          escaláveis com .NET e Angular.
-        </p>
+        <p class="brand-description">{{ t.footer.description }}</p>
       </div>
 
       <div class="footer-col">
-        <h4 class="col-title">NAVEGAÇÃO</h4>
+        <h4 class="col-title">{{ t.footer.navigation }}</h4>
         <ul class="footer-list">
-          <li><a href="#">Início</a></li>
-          <li><a href="#sobre-mim">Sobre mim</a></li>
-          <li><a href="#habilidades">Habilidades</a></li>
-          <li><a href="#projetos">Projetos</a></li>
-          <li><a href="#contatos">Contato</a></li>
+          <li><a href="#">{{ t.footer.home }}</a></li>
+          <li><a href="#sobre-mim">{{ t.footer.about }}</a></li>
+          <li><a href="#habilidades">{{ t.footer.skills }}</a></li>
+          <li><a href="#projetos">{{ t.footer.projects }}</a></li>
+          <li><a href="#contatos">{{ t.footer.contact }}</a></li>
         </ul>
       </div>
 
       <div class="footer-col">
-        <h4 class="col-title">CONECTE-SE</h4>
+        <h4 class="col-title">{{ t.footer.connect }}</h4>
         <ul class="footer-list social-list">
           <li>
             <a href="mailto:wesleyaquinobsb@gmail.com">
@@ -463,43 +412,39 @@
             </a>
           </li>
           <li>
-            <a href="https://www.linkedin.com/in/wesleyaquino/" target="_blank" rel="noopener noreferrer" aria-label="Perfil de Wesley Aquino no LinkedIn">
+            <a href="https://www.linkedin.com/in/wesleyaquino/" target="_blank" rel="noopener noreferrer" [attr.aria-label]="t.hero.linkedin">
               <i class="fa-brands fa-linkedin"></i>
               <span>LinkedIn</span>
             </a>
           </li>
           <li>
-            <a href="https://github.com/wesleyaquinodev1" target="_blank" rel="noopener noreferrer" aria-label="GitHub de Wesley Aquino">
+            <a href="https://github.com/wesleyaquinodev1" target="_blank" rel="noopener noreferrer" [attr.aria-label]="t.hero.github">
               <i class="fa-brands fa-github"></i>
               <span>GitHub</span>
             </a>
           </li>
           <li>
-            <a href="curriculo-wesley-aquino.pdf" download aria-label="curriculo do wesley aquino">
+            <a href="curriculo-wesley-aquino.pdf" download [attr.aria-label]="t.footer.download">
               <i class="fa-regular fa-file-lines"></i>
-              <span>Baixar Currículo</span>
+              <span>{{ t.footer.download }}</span>
             </a>
           </li>
         </ul>
       </div>
-
     </div>
 
     <div class="footer-bottom">
       <div class="bottom-left">
-        <span>Wesley Aquino © {{ copyrightYear }}. Todos os direitos reservados.</span>
+        <span>Wesley Aquino © {{ copyrightYear }}. {{ t.footer.copyright }}</span>
         <span class="build-version">v{{ appVersion }} ({{ deployHash }})</span>
       </div>
-
+      <span><a href="#hero">{{ t.footer.backToTop }}</a></span>
       <div class="bottom-right">
         <span>
-          Desenvolvido por
-          <a href="https://www.linkedin.com/in/wesleyaquino/" target="_blank" rel="noopener noreferrer" aria-label="Perfil de Wesley Aquino no LinkedIn">
-            Wesley Aquino
-          </a>
+          {{ t.footer.developedBy }}
+          <a href="https://www.linkedin.com/in/wesleyaquino/" target="_blank" rel="noopener noreferrer" [attr.aria-label]="t.hero.linkedin">Wesley Aquino</a>
         </span>
       </div>
     </div>
-
   </div>
 </footer>

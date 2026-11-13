@@ -1,95 +1,87 @@
-import { Component, OnInit, signal } from '@angular/core';
-import { Title, Meta } from '@angular/platform-browser';
+import { Component, HostListener, OnInit, signal } from '@angular/core';
 import packageJson from '../../package.json';
 import { CommonModule } from '@angular/common';
+import { translations, type Language } from './core/i18n/translations';
+import { SeoService } from './core/seo/seo.service';
 
 @Component({
   selector: 'app-root',
   imports: [CommonModule],
   templateUrl: './app.html',
-  styleUrl: './app.scss'
+  styleUrl: './app.scss',
+    host: {
+    '[class.dark-mode]': 'darkMode()'
+  }
 })
 export class App implements OnInit {
   constructor(
-    private titleService: Title,
-    private metaService: Meta,
+    private readonly seoService: SeoService
   ) {}
 
   protected readonly title = signal('Wesley Aquino | Desenvolvedor Full Stack');
   deployHash = '__BUILD_HASH__';
   appVersion = packageJson.version;
   copyrightYear = '2026'
+  readonly language = signal<Language>('pt'); 
+  readonly darkMode = signal(false);
+
+  get t() {
+    return translations[this.language()];
+  }
+
+    private loadPreferences(): void {
+      if (typeof window === 'undefined') return;
+      const savedLanguage = window.localStorage.getItem('language');
+
+      if (savedLanguage === 'pt' || savedLanguage === 'en') {
+        this.language.set(savedLanguage);
+      }
+
+      this.darkMode.set(
+        window.localStorage.getItem('theme') === 'dark'
+      );
+    }
+
+  changeLanguage(event: Event): void {
+    const selectedLanguage = (event.target as HTMLSelectElement).value;
+
+    if (selectedLanguage !== 'pt' && selectedLanguage !== 'en') {
+      return;
+    }
+
+    this.language.set(selectedLanguage);
+
+    if (typeof window !== 'undefined') {
+      window.localStorage.setItem('language', selectedLanguage);
+    }
+
+    this.seoService.update(this.language());
+  }
+
+  changeTheme(event: Event): void {
+    const enabled = (event.target as HTMLInputElement).checked;
+    this.darkMode.set(enabled);
+
+    if (typeof window !== 'undefined') {
+      if (enabled) {
+        window.localStorage.setItem('theme', 'dark');
+      } else {
+        window.localStorage.removeItem('theme');
+      }
+    }
+  }
+
+  @HostListener('document:click', ['$event'])
+  closeResumeDropdown(event: MouseEvent): void {
+    const dropdown = document.querySelector('.resume-dropdown');
+
+    if (dropdown && !dropdown.contains(event.target as Node)) {
+      dropdown.removeAttribute('open');
+    }
+  }
 
   ngOnInit(): void {
-    this.titleService.setTitle(
-      'Portfólio Wesley Aquino | Desenvolvedor Full Stack'
-    );
-
-    this.metaService.addTags([
-      {
-        name: 'description',
-        content:
-          'Portfólio de Wesley Aquino, desenvolvedor Full Stack com foco em Angular, TypeScript, C#, .NET e desenvolvimento de aplicações web.'
-      },
-      {
-        name: 'keywords',
-        content:
-          'Wesley Aquino, Desenvolvedor Full Stack, Angular, TypeScript, C#, .NET, ASP.NET Core, Desenvolvimento Web, Portfólio'
-      },
-      {
-        name: 'author',
-        content: 'Wesley Aquino'
-      },
-      {
-        name: 'robots',
-        content: 'index, follow'
-      },
-      {
-        property: 'og:type',
-        content: 'website'
-      },
-      {
-        property: 'og:title',
-        content: 'Wesley Aquino | Desenvolvedor Full Stack'
-      },
-      {
-        property: 'og:description',
-        content:
-          'Conheça meu portfólio, experiências profissionais e projetos em desenvolvimento web.'
-      },
-      {
-        property: 'og:url',
-        content: 'https://SEU-DOMINIO.com.br'
-      },
-      {
-        property: 'og:image',
-        content: 'https://SEU-DOMINIO.com.br/assets/og-image.png'
-      },
-      {
-        property: 'og:locale',
-        content: 'pt_BR'
-      },
-      {
-        property: 'og:site_name',
-        content: 'Wesley Aquino'
-      },
-      {
-        name: 'twitter:card',
-        content: 'summary_large_image'
-      },
-      {
-        name: 'twitter:title',
-        content: 'Wesley Aquino | Desenvolvedor Full Stack'
-      },
-      {
-        name: 'twitter:description',
-        content:
-          'Portfólio profissional de Wesley Aquino — Full Stack Developer.'
-      },
-      {
-        name: 'twitter:image',
-        content: 'https://SEU-DOMINIO.com.br/assets/og-image.png'
-      }
-    ]);
+  this.loadPreferences();
+  this.seoService.initialize(this.language());
   }
 }
